@@ -32,3 +32,29 @@ p05([], []).  % Base case: reversing an empty list gives an empty list.
 p05([H|T], X) :-
     p05(T, X1),
     append(X1, [H], X).
+
+% find out if its a palindrome or something
+p06(L) :- 
+  p05(L, L2), % reverse the list
+  L = L2.
+
+% recursivley flatted a nested list
+
+p07([], []).
+p07([H|T], Flat) :-
+    p07(H, FH),
+    p07(T, FT),
+    append(FH, FT, Flat).
+p07(X, [X]) :-
+    \+ is_list(X).
+
+% remove duplicates from a list or something
+p08([], X, X).
+p08([H|T], X, Result) :-
+    member(H, X),
+    p08(T, X, Result).
+p08([H|T], X, Result) :- 
+    \+ member(H, X),
+    append(X, [H], X1),
+    p08(T, X1, Result).
+
