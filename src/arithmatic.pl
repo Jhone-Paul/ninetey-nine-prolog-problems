@@ -43,4 +43,29 @@ totient_helper(X, I, Acc, R) :-
     totient_coprime(X, I, G),
     Acc1 is Acc + G,
     I1 is I + 1,
-    totient_helper(X, I1, Acc1, R). 
+    totient_helper(X, I1, Acc1, R).
+
+  %Determine the prime factors of a given positive integer.
+  % Construct a flat list containing the prime factors in ascending order.
+  % Example:
+  % ?- prime_factors(315, L).
+  % L = [3,3,5,7]
+  %
+  %
+prime_factors(X,L) :-
+  X>1,
+  prime_factors(X,2,[],L).
+
+prime_factors(1,_,Acc,L):-
+  reverse(Acc,L), !.
+
+% If Div divides N, it's a factor — add it and divide N by it
+prime_factors(N, Div, Acc, L) :-
+    0 is N mod Div,
+    N1 is N // Div,
+    prime_factors(N1, Div, [Div|Acc], L).
+
+% Otherwise, try the next possible divisor
+prime_factors(N, Div, Acc, L) :-
+    Div2 is Div + 1,
+    prime_factors(N, Div2, Acc, L).
