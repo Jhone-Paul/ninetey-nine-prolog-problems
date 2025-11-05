@@ -69,3 +69,14 @@ prime_factors(N, Div, Acc, L) :-
 prime_factors(N, Div, Acc, L) :-
     Div2 is Div + 1,
     prime_factors(N, Div2, Acc, L).
+
+has_factor(N, F) :-
+    N mod F =:= 0.
+has_factor(N, F) :-
+    F * F < N,
+    F2 is F + 2,
+    has_factor(N, F2).
+
+% generate list of primes in range Low..High
+prime_list(Low, High, Primes) :-
+    findall(P, (between(Low, High, P), is_prime(P)), Primes).
